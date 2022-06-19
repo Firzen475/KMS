@@ -1,0 +1,12 @@
+
+[w_ws]
+dsg01
+
+[w_ws:vars]
+ansible_user = ansible@FORTA.LOCAL
+ansible_password = FortaADM!
+ansible_connection = winrm
+ansible_port = 5985
+ansible_winrm_transport = kerberos
+ansible_winrm_server_cert_validation = ignore
+ansible_become = false

@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  ansible_kms:
+    build:
+      context: ./ansible_kms
+      dockerfile: Dockerfile
+      args:
+        SHEDULE: "* */2 * * *"
+    image: ansible_kms
+    container_name: ansible_kms
+    volumes:
+      - ./log:/var/log
+      - ./root:/root
+    restart: always
+    depends_on:
+      - kms
+
+  kms:
+    build: 
+      context: ./kms
+      dockerfile: Dockerfile
+    image: kms
+    container_name: kms
+    ports:
+      - "1688:1688"
+    restart: always
+
+#networks:
+#    back:
+        # use the bridge driver, but enable IPv6
+#        driver: overlay
+#        ipam:
+#            driver: default
+#            config:
+#                - subnet: 172.16.238.0/24
+#                - gateway: 172.16.238.1

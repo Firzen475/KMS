@@ -1,0 +1,158 @@
+Using /etc/ansible/ansible.cfg as config file
+
+PLAY [w_ws] ********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [dsg01]
+
+TASK [Получить версию OS] ******************************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": [10], "result": {}, "verbose": [], "warning": []}
+
+TASK [Получить статус активации windows] ***************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": [{"LicenseStatus": 1}], "result": {}, "verbose": [], "warning": []}
+
+TASK [Наличие скрипта активации] ***********************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": ["C:\\WINDOWS\\SYSTEM32\\slmgr.vbs"], "result": {}, "verbose": [], "warning": []}
+
+TASK [Повторная активация для WIN 10 PRO] **************************************
+skipping: [dsg01] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [Повторная активация для WIN 7 PRO] ***************************************
+skipping: [dsg01] => {"changed": false, "skip_reason": "Conditional result was False"}
+
+TASK [Расположение офиса] ******************************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": ["C:\\Program Files\\Microsoft Office\\"], "result": {}, "verbose": [], "warning": []}
+
+TASK [Наличие скрипта ospp] ****************************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": ["C:\\Program Files\\Microsoft Office\\Office16\\OSPP.VBS"], "result": {}, "verbose": [], "warning": []}
+
+TASK [Сброс активации] *********************************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": ["��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812", "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.", "", "---Processing--------------------------", "---------------------------------------", "Uninstalling product key for: Office 16, Office16ProjectProVL_KMS_Client edition", "<Product key uninstall successful>", "---------------------------------------", "---Exiting-----------------------------", "��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812", "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.", "", "---Processing--------------------------", "---------------------------------------", "Uninstalling product key for: Office 16, Office16VisioProVL_KMS_Client edition", "<Product key uninstall successful>", "---------------------------------------", "---Exiting-----------------------------", "��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812", "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.", "", "---Processing--------------------------", "---------------------------------------", "Uninstalling product key for: Office 16, Office16SkypeforBusinessVL_KMS_Client edition", "<Product key uninstall successful>", "---------------------------------------", "---Exiting-----------------------------", "��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812", "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.", "", "---Processing--------------------------", "---------------------------------------", "Uninstalling product key for: Office 16, Office16ProPlusVL_KMS_Client edition", "<Product key uninstall successful>", "---------------------------------------", "---Exiting-----------------------------"], "result": {}, "verbose": [], "warning": []}
+
+TASK [Смена лицензии офиса] ****************************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": ["��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812", "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.", "", "---Processing--------------------------", "---------------------------------------", "Installing Office license: c:\\program files\\microsoft office\\root\\licenses16\\proplusvl_kms_client-ul-oob.xrm-ms", "Office license installed successfully.", "---------------------------------------", "---Exiting-----------------------------"], "result": {}, "verbose": [], "warning": []}
+
+TASK [Смена лицензии проджекта] ************************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": ["��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812", "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.", "", "---Processing--------------------------", "---------------------------------------", "Installing Office license: c:\\program files\\microsoft office\\root\\licenses16\\projectprovl_kms_client-ul.xrm-ms", "Office license installed successfully.", "---------------------------------------", "---Exiting-----------------------------"], "result": {}, "verbose": [], "warning": []}
+
+TASK [Смена лицензии visio] ****************************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": ["��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812", "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.", "", "---Processing--------------------------", "---------------------------------------", "Installing Office license: c:\\program files\\microsoft office\\root\\licenses16\\visioprovl_kms_client-ul.xrm-ms", "Office license installed successfully.", "---------------------------------------", "---Exiting-----------------------------"], "result": {}, "verbose": [], "warning": []}
+
+TASK [Смена лицензии skype] ****************************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": ["��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812", "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.", "", "---Processing--------------------------", "---------------------------------------", "Installing Office license: c:\\program files\\microsoft office\\root\\licenses16\\skypeforbusinessvl_kms_client-ul-oob.xrm-ms", "Office license installed successfully.", "---------------------------------------", "---Exiting-----------------------------"], "result": {}, "verbose": [], "warning": []}
+
+TASK [Настройка вспомогательных лицензий] **************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": ["��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812", "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.", "", "---Processing--------------------------", "---------------------------------------", "Installing Office license: c:\\program files\\microsoft office\\root\\licenses16\\pkeyconfig-office.xrm-ms", "Office license installed successfully.", "---------------------------------------", "---Exiting-----------------------------"], "result": {}, "verbose": [], "warning": []}
+
+TASK [Установка ключей и активация] ********************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": ["��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812", "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.", "", "---Processing--------------------------", "---------------------------------------", "Installed product key detected - attempting to activate the following product:", "SKU ID: 4f414197-0fc2-4c01-b68a-86cbb9ac254c", "LICENSE NAME: Office 16, Office16ProjectProVL_KMS_Client edition", "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel", "Last 5 characters of installed product key: G83KT", "<Product activation successful>", "---------------------------------------", "Installed product key detected - attempting to activate the following product:", "SKU ID: 6bf301c1-b94a-43e9-ba31-d494598c47fb", "LICENSE NAME: Office 16, Office16VisioProVL_KMS_Client edition", "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel", "Last 5 characters of installed product key: RJRJK", "<Product activation successful>", "---------------------------------------", "Installed product key detected - attempting to activate the following product:", "SKU ID: 83e04ee1-fa8d-436d-8994-d31a862cab77", "LICENSE NAME: Office 16, Office16SkypeforBusinessVL_KMS_Client edition", "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel", "Last 5 characters of installed product key: DDBV6", "<Product activation successful>", "---------------------------------------", "Installed product key detected - attempting to activate the following product:", "SKU ID: d450596f-894d-49e0-966a-fd39ed4c4c64", "LICENSE NAME: Office 16, Office16ProPlusVL_KMS_Client edition", "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel", "Last 5 characters of installed product key: WFG99", "<Product activation successful>", "---------------------------------------", "---------------------------------------", "---Exiting-----------------------------"], "result": {}, "verbose": [], "warning": []}
+
+TASK [Результат активации windows] *********************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": [{"LicenseStatus": 1}], "result": {}, "verbose": [], "warning": []}
+
+TASK [debug] *******************************************************************
+ok: [dsg01] => {
+    "msg": {
+        "LicenseStatus": 1
+    }
+}
+
+TASK [Результат активации Офиса] ***********************************************
+changed: [dsg01] => {"changed": true, "debug": [], "error": [], "host_err": "", "host_out": "", "information": [], "output": ["��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812", "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.", "", "---Processing--------------------------", "---------------------------------------", "PRODUCT ID: 00338-00000-00000-AA939", "SKU ID: 4f414197-0fc2-4c01-b68a-86cbb9ac254c", "LICENSE NAME: Office 16, Office16ProjectProVL_KMS_Client edition", "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel", "BETA EXPIRATION: 01.01.1601", "LICENSE STATUS:  ---LICENSED--- ", "ERROR CODE: 0x4004F040 (for information purposes only as the status is licensed)", "ERROR DESCRIPTION: The Software Licensing Service reported that the product was activated but the owner should verify the Product Use Rights.", "REMAINING GRACE: 180 days  (259200 minute(s) before expiring)", "Last 5 characters of installed product key: G83KT", "Activation Type Configuration: ALL", "\tDNS auto-discovery: KMS name not available", "\tKMS machine registry override defined: 10.10.30.5:1688", "\tActivation Interval: 120 minutes", "\tRenewal Interval: 10080 minutes", "\tKMS host caching: Enabled", "---------------------------------------", "PRODUCT ID: 00341-50000-00000-AA933", "SKU ID: 6bf301c1-b94a-43e9-ba31-d494598c47fb", "LICENSE NAME: Office 16, Office16VisioProVL_KMS_Client edition", "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel", "BETA EXPIRATION: 01.01.1601", "LICENSE STATUS:  ---LICENSED--- ", "ERROR CODE: 0x4004F040 (for information purposes only as the status is licensed)", "ERROR DESCRIPTION: The Software Licensing Service reported that the product was activated but the owner should verify the Product Use Rights.", "REMAINING GRACE: 180 days  (259200 minute(s) before expiring)", "Last 5 characters of installed product key: RJRJK", "Activation Type Configuration: ALL", "\tDNS auto-discovery: KMS name not available", "\tKMS machine registry override defined: 10.10.30.5:1688", "\tActivation Interval: 120 minutes", "\tRenewal Interval: 10080 minutes", "\tKMS host caching: Enabled", "---------------------------------------", "PRODUCT ID: 00340-40000-00000-AA041", "SKU ID: 83e04ee1-fa8d-436d-8994-d31a862cab77", "LICENSE NAME: Office 16, Office16SkypeforBusinessVL_KMS_Client edition", "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel", "BETA EXPIRATION: 01.01.1601", "LICENSE STATUS:  ---LICENSED--- ", "ERROR CODE: 0x4004F040 (for information purposes only as the status is licensed)", "ERROR DESCRIPTION: The Software Licensing Service reported that the product was activated but the owner should verify the Product Use Rights.", "REMAINING GRACE: 180 days  (259200 minute(s) before expiring)", "Last 5 characters of installed product key: DDBV6", "Activation Type Configuration: ALL", "\tDNS auto-discovery: KMS name not available", "\tKMS machine registry override defined: 10.10.30.5:1688", "\tActivation Interval: 120 minutes", "\tRenewal Interval: 10080 minutes", "\tKMS host caching: Enabled", "---------------------------------------", "PRODUCT ID: 00339-10000-00000-AA372", "SKU ID: d450596f-894d-49e0-966a-fd39ed4c4c64", "LICENSE NAME: Office 16, Office16ProPlusVL_KMS_Client edition", "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel", "BETA EXPIRATION: 01.01.1601", "LICENSE STATUS:  ---LICENSED--- ", "ERROR CODE: 0x4004F040 (for information purposes only as the status is licensed)", "ERROR DESCRIPTION: The Software Licensing Service reported that the product was activated but the owner should verify the Product Use Rights.", "REMAINING GRACE: 180 days  (259200 minute(s) before expiring)", "Last 5 characters of installed product key: WFG99", "Activation Type Configuration: ALL", "\tDNS auto-discovery: KMS name not available", "\tKMS machine registry override defined: 10.10.30.5:1688", "\tActivation Interval: 120 minutes", "\tRenewal Interval: 10080 minutes", "\tKMS host caching: Enabled", "---------------------------------------", "---------------------------------------", "---Exiting-----------------------------"], "result": {}, "verbose": [], "warning": []}
+
+TASK [debug] *******************************************************************
+ok: [dsg01] => {
+    "msg": {
+        "changed": true,
+        "debug": [],
+        "error": [],
+        "failed": false,
+        "host_err": "",
+        "host_out": "",
+        "information": [],
+        "output": [
+            "��ࢥ� �業�ਥ� Windows (Microsoft R) ����� 5.812",
+            "Copyright (C) ��௮��� �������� 1996-2006, �� �ࠢ� ���饭�.",
+            "",
+            "---Processing--------------------------",
+            "---------------------------------------",
+            "PRODUCT ID: 00338-00000-00000-AA939",
+            "SKU ID: 4f414197-0fc2-4c01-b68a-86cbb9ac254c",
+            "LICENSE NAME: Office 16, Office16ProjectProVL_KMS_Client edition",
+            "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel",
+            "BETA EXPIRATION: 01.01.1601",
+            "LICENSE STATUS:  ---LICENSED--- ",
+            "ERROR CODE: 0x4004F040 (for information purposes only as the status is licensed)",
+            "ERROR DESCRIPTION: The Software Licensing Service reported that the product was activated but the owner should verify the Product Use Rights.",
+            "REMAINING GRACE: 180 days  (259200 minute(s) before expiring)",
+            "Last 5 characters of installed product key: G83KT",
+            "Activation Type Configuration: ALL",
+            "\tDNS auto-discovery: KMS name not available",
+            "\tKMS machine registry override defined: 10.10.30.5:1688",
+            "\tActivation Interval: 120 minutes",
+            "\tRenewal Interval: 10080 minutes",
+            "\tKMS host caching: Enabled",
+            "---------------------------------------",
+            "PRODUCT ID: 00341-50000-00000-AA933",
+            "SKU ID: 6bf301c1-b94a-43e9-ba31-d494598c47fb",
+            "LICENSE NAME: Office 16, Office16VisioProVL_KMS_Client edition",
+            "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel",
+            "BETA EXPIRATION: 01.01.1601",
+            "LICENSE STATUS:  ---LICENSED--- ",
+            "ERROR CODE: 0x4004F040 (for information purposes only as the status is licensed)",
+            "ERROR DESCRIPTION: The Software Licensing Service reported that the product was activated but the owner should verify the Product Use Rights.",
+            "REMAINING GRACE: 180 days  (259200 minute(s) before expiring)",
+            "Last 5 characters of installed product key: RJRJK",
+            "Activation Type Configuration: ALL",
+            "\tDNS auto-discovery: KMS name not available",
+            "\tKMS machine registry override defined: 10.10.30.5:1688",
+            "\tActivation Interval: 120 minutes",
+            "\tRenewal Interval: 10080 minutes",
+            "\tKMS host caching: Enabled",
+            "---------------------------------------",
+            "PRODUCT ID: 00340-40000-00000-AA041",
+            "SKU ID: 83e04ee1-fa8d-436d-8994-d31a862cab77",
+            "LICENSE NAME: Office 16, Office16SkypeforBusinessVL_KMS_Client edition",
+            "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel",
+            "BETA EXPIRATION: 01.01.1601",
+            "LICENSE STATUS:  ---LICENSED--- ",
+            "ERROR CODE: 0x4004F040 (for information purposes only as the status is licensed)",
+            "ERROR DESCRIPTION: The Software Licensing Service reported that the product was activated but the owner should verify the Product Use Rights.",
+            "REMAINING GRACE: 180 days  (259200 minute(s) before expiring)",
+            "Last 5 characters of installed product key: DDBV6",
+            "Activation Type Configuration: ALL",
+            "\tDNS auto-discovery: KMS name not available",
+            "\tKMS machine registry override defined: 10.10.30.5:1688",
+            "\tActivation Interval: 120 minutes",
+            "\tRenewal Interval: 10080 minutes",
+            "\tKMS host caching: Enabled",
+            "---------------------------------------",
+            "PRODUCT ID: 00339-10000-00000-AA372",
+            "SKU ID: d450596f-894d-49e0-966a-fd39ed4c4c64",
+            "LICENSE NAME: Office 16, Office16ProPlusVL_KMS_Client edition",
+            "LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel",
+            "BETA EXPIRATION: 01.01.1601",
+            "LICENSE STATUS:  ---LICENSED--- ",
+            "ERROR CODE: 0x4004F040 (for information purposes only as the status is licensed)",
+            "ERROR DESCRIPTION: The Software Licensing Service reported that the product was activated but the owner should verify the Product Use Rights.",
+            "REMAINING GRACE: 180 days  (259200 minute(s) before expiring)",
+            "Last 5 characters of installed product key: WFG99",
+            "Activation Type Configuration: ALL",
+            "\tDNS auto-discovery: KMS name not available",
+            "\tKMS machine registry override defined: 10.10.30.5:1688",
+            "\tActivation Interval: 120 minutes",
+            "\tRenewal Interval: 10080 minutes",
+            "\tKMS host caching: Enabled",
+            "---------------------------------------",
+            "---------------------------------------",
+            "---Exiting-----------------------------"
+        ],
+        "result": {},
+        "verbose": [],
+        "warning": []
+    }
+}
+
+PLAY RECAP *********************************************************************
+dsg01                      : ok=17   changed=14   unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+

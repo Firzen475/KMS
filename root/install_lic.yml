@@ -1,0 +1,225 @@
+- hosts: w_ws
+  connection: local
+  tasks:
+
+####### windows #######
+    - name: Получить версию OS
+      ansible.windows.win_powershell:
+        script: |
+          if ( (get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName | Select-String  -pattern "windows 10" -quiet ) {echo 10} else {if ((get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName | Select-String  -pattern "windows 7" -quiet) {echo 7} }
+      ignore_errors: True
+      register: os_version_obj
+
+#    - debug: msg="{{ os_version_obj.output[0] }}"
+#      ignore_errors: True
+
+    - name: Получить статус активации windows
+      ansible.windows.win_powershell:
+        script: |
+          Get-CimInstance SoftwareLicensingProduct -Filter "Name like 'Windows%'" | where { $_.PartialProductKey } | select LicenseStatus
+      ignore_errors: True
+      register: os_status
+
+#    - debug: msg="{{ os_status }}"
+#      ignore_errors: True
+
+
+    - name: Наличие скрипта активации
+      ansible.windows.win_powershell:
+        script: |
+          if (Test-Path -Path "C:\WINDOWS\SYSTEM32\slmgr.vbs" -PathType Leaf) {"C:\WINDOWS\SYSTEM32\slmgr.vbs"}
+      ignore_errors: True
+      register: slmgr_path
+
+#    - debug: msg="{{ slmgr_path.output[0] }}"
+#      ignore_errors: True
+
+    - name: Повторная активация для WIN 10 PRO
+      ansible.windows.win_powershell:
+        script: |
+          cscript {{ slmgr_path.output[0] }} /ipk NRG8B-VKK3Q-CXVCJ-9G2XF-6Q84J |
+          cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /skms 10.10.30.5:1688 |
+          cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /ato
+      ignore_errors: True
+      register: act_win10
+      when:
+        - os_version_obj.output[0] is defined
+        - os_version_obj.output[0] == 10
+        - slmgr_path.output[0] is defined
+        - os_status.output[0].LicenseStatus is not defined or os_status.output[0].LicenseStatus != 1
+
+    - name: Повторная активация для WIN 7 PRO
+      ansible.windows.win_powershell:
+        script: |
+          cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /ipk FJ82H-XT6CR-J8D7P-XQJJ2-GPDD4 |
+          cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /skms 10.10.30.5:1688 |
+          cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /ato
+      ignore_errors: True
+      register: Activate_win_10_pro
+      when:
+        - os_version_obj.output[0] is defined
+        - os_version_obj.output[0] == 7
+        - os_status.output[0].LicenseStatus is not defined or os_status.output[0].LicenseStatus != 1
+
+####### office #######
+    - name: Расположение офиса
+      ansible.windows.win_powershell:
+        script: |
+          if (Test-Path -Path "$Env:Programfiles(x86)\Microsoft Office\root\Licenses16") {"$Env:Programfiles(x86)\Microsoft Office\"} else {if (Test-Path -Path "$Env:Programfiles\Microsoft Office\root\Licenses16"){"$Env:Programfiles\Microsoft Office\"}}
+      ignore_errors: True
+      register: office_path
+
+#    - debug: msg="{{ office_path.output[0] }}"
+#      ignore_errors: True
+
+    - name: Наличие скрипта ospp
+      ansible.windows.win_powershell:
+        script: |
+          if (Test-Path -Path "{{ office_path.output[0] }}\Office16\OSPP.VBS" -PathType Leaf) {"{{ office_path.output[0] }}Office16\OSPP.VBS"}
+      ignore_errors: True
+      register: ospp_exist
+      when:
+        - office_path.output[0] is defined
+
+#    - debug: msg="{{ ospp_exist.output[0] }}"
+#      ignore_errors: True
+
+    - name: Сброс активации
+      ansible.windows.win_powershell:
+        script: |
+          cscript "{{ ospp_exist.output[0] }}" /dstatus |
+          Select-String "Last 5 characters" |
+          foreach-object {$_ -replace "Last 5 characters of installed product key: ", ""} |
+          foreach-object {cscript "{{ ospp_exist.output[0] }}" /unpkey:$_}
+      ignore_errors: True
+      register: reset_act_result
+      when:
+        - office_path.output[0] is defined
+        - ospp_exist.output[0] is defined
+#    - debug: msg="{{ reset_act_result }}"
+#      ignore_errors: True
+
+    - name: Смена лицензии офиса
+      ansible.windows.win_powershell:
+        script: |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\ProPlusVL_KMS_Client-ppd.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\ProPlusVL_KMS_Client-ul.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\ProPlusVL_KMS_Client-ul-oob.xrm-ms"
+      ignore_errors: True
+      register: office_lic_change
+      when:
+        - office_path.output[0] is defined
+        - ospp_exist.output[0] is defined
+
+#    - debug: msg="{{ office_lic_change }}"
+#      ignore_errors: True
+
+    - name: Смена лицензии проджекта
+      ansible.windows.win_powershell:
+        script: |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\ProjectProVL_KMS_Client-ppd.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\ProjectProVL_KMS_Client-ul-oob.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\ProjectProVL_KMS_Client-ul.xrm-ms"
+      ignore_errors: True
+      register: proj_lic_change
+      when:
+        - office_path.output[0] is defined
+        - ospp_exist.output[0] is defined
+
+#    - debug: msg="{{ proj_lic_change }}"
+#      ignore_errors: True
+
+    - name: Смена лицензии visio
+      ansible.windows.win_powershell:
+        script: |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\VisioProVL_KMS_Client-ppd.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\VisioProVL_KMS_Client-ul-oob.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\VisioProVL_KMS_Client-ul.xrm-ms"
+      ignore_errors: True
+      register: visio_lic_change
+      when:
+        - office_path.output[0] is defined
+        - ospp_exist.output[0] is defined
+
+#    - debug: msg="{{ visio_lic_change }}"
+#      ignore_errors: True
+
+    - name: Смена лицензии skype
+      ansible.windows.win_powershell:
+        script: |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\SkypeforBusinessVL_KMS_Client-ppd.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\SkypeforBusinessVL_KMS_Client-ul.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\SkypeforBusinessVL_KMS_Client-ul-oob.xrm-ms"
+      ignore_errors: True
+      register: skype_lic_change
+      when:
+        - office_path.output[0] is defined
+        - ospp_exist.output[0] is defined
+
+#    - debug: msg="{{ skype_lic_change }}"
+#      ignore_errors: True
+
+    - name: Настройка вспомогательных лицензий
+      ansible.windows.win_powershell:
+        script: |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\client-issuance-bridge-office.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\client-issuance-root.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\client-issuance-root-bridge-test.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\client-issuance-stil.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\client-issuance-ul.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\client-issuance-ul-oob.xrm-ms" |
+          cscript "{{ ospp_exist.output[0] }}" /inslic:"{{ office_path.output[0] }}root\Licenses16\pkeyconfig-office.xrm-ms"
+      ignore_errors: True
+      register: common_lic_change
+      when:
+        - office_path.output[0] is defined
+        - ospp_exist.output[0] is defined
+
+#    - debug: msg="{{ common_lic_change }}"
+#      ignore_errors: True
+
+    - name: Установка ключей и активация
+      ansible.windows.win_powershell:
+        script: |
+          cscript "{{ ospp_exist.output[0] }}" /inpkey:XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99 |
+          cscript "{{ ospp_exist.output[0] }}" /inpkey:YG9NW-3K39V-2T3HJ-93F3Q-G83KT |
+          cscript "{{ ospp_exist.output[0] }}" /inpkey:PD3PC-RHNGV-FXJ29-8JK7D-RJRJK |
+          cscript "{{ ospp_exist.output[0] }}" /inpkey:869NQ-FJ69K-466HW-QYCP2-DDBV6 |
+          cscript "{{ ospp_exist.output[0] }}" /sethst:10.10.30.5 |
+          cscript "{{ ospp_exist.output[0] }}" /act
+      ignore_errors: True
+      register: office_act_result
+      when:
+        - office_path.output[0] is defined
+        - ospp_exist.output[0] is defined
+
+#    - debug: msg="{{ office_act_result }}"
+#      ignore_errors: True
+
+
+####### Результаты #######
+
+
+    - name: Результат активации windows
+      ansible.windows.win_powershell:
+        script: |
+          Get-CimInstance SoftwareLicensingProduct -Filter "Name like 'Windows%'" | where { $_.PartialProductKey } | select LicenseStatus
+      ignore_errors: True
+      register: result_windows
+
+    - debug: msg="{{ result_windows.output[0] }}"
+      ignore_errors: True
+
+    - name: Результат активации Офиса
+      ansible.windows.win_powershell:
+        script: |
+          cscript "{{ ospp_exist.output[0] }}" /dstatus
+      ignore_errors: True
+      register: result_office
+      when:
+        - office_path.output[0] is defined
+        - ospp_exist.output[0] is defined
+
+    - debug: msg="{{ result_office }}"
+      ignore_errors: True
+

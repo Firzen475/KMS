@@ -1,0 +1,13 @@
+2022-06-19 06:47:00,624 INFO Checking if system is running on battery is skipped. Please install powermgmt-base package to check power status and skip installing updates when the system is running on battery.
+2022-06-19 06:47:00,673 INFO Starting unattended upgrades script
+2022-06-19 06:47:00,675 INFO Allowed origins are: o=Ubuntu,a=focal, o=Ubuntu,a=focal-security, o=UbuntuESMApps,a=focal-apps-security, o=UbuntuESM,a=focal-infra-security
+2022-06-19 06:47:00,676 INFO Initial blacklist: 
+2022-06-19 06:47:00,677 INFO Initial whitelist (not strict): 
+2022-06-19 06:47:10,546 INFO Checking if system is running on battery is skipped. Please install powermgmt-base package to check power status and skip installing updates when the system is running on battery.
+2022-06-19 06:47:10,565 INFO Starting unattended upgrades script
+2022-06-19 06:47:10,568 INFO Allowed origins are: o=Ubuntu,a=focal, o=Ubuntu,a=focal-security, o=UbuntuESMApps,a=focal-apps-security, o=UbuntuESM,a=focal-infra-security
+2022-06-19 06:47:10,569 INFO Initial blacklist: 
+2022-06-19 06:47:10,569 INFO Initial whitelist (not strict): 
+2022-06-19 06:47:17,277 INFO Packages that will be upgraded: e2fsprogs libext2fs2 libss2 logsave
+2022-06-19 06:47:17,279 INFO Writing dpkg log to /var/log/unattended-upgrades/unattended-upgrades-dpkg.log
+2022-06-19 06:47:34,060 INFO All upgrades installed
