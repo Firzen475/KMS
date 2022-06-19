@@ -13,7 +13,7 @@
 
 - Настройка файла переменных
  
-`nano ./ansible_kms/var.env`
+`nano ./.env`
 
 - Настройка kerberos
 
