@@ -3,12 +3,9 @@
   I. Подготовка
 - Загрузка этого проекта
 
-`sudo apt install git 
-
+`sudo apt install git
 mkdir ./docker_root /n
-
 cd ./docker_root
-
 git clone --branch master --single-branch https://github.com/Firzen475/KMS.git`
 
 - Настройка файла переменных
