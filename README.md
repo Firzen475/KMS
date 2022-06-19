@@ -45,17 +45,17 @@
 
 Для успешного выполнения скриптов нужно выполнить 3 условия
 
- - Пользователь в файле inventory должен быть локальным администратором [link]https://winitpro.ru/index.php/2019/11/27/gpo-dobavit-v-gruppu-lok-admins/
+ - Пользователь в файле inventory должен быть локальным администратором [link](https://winitpro.ru/index.php/2019/11/27/gpo-dobavit-v-gruppu-lok-admins/)
 
  - На всех WS установлен PowerShell 5.0+
 
- - На всех WS включен WinRM [link]https://winitpro.ru/index.php/2012/01/31/kak-aktivirovat-windows-remote-management-s-pomoshhyu-gruppovoj-politiki/
+ - На всех WS включен WinRM [link](https://winitpro.ru/index.php/2012/01/31/kak-aktivirovat-windows-remote-management-s-pomoshhyu-gruppovoj-politiki/)
 
 
   II. Сборка 
-- Установка [docker]https://docs.docker.com/engine/install/
+- Установка [docker](https://docs.docker.com/engine/install/)
 
-- Установка [docker-compose]https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-ru
+- Установка [docker-compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-ru)
 
 - Полезные команды
 
