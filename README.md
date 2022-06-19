@@ -3,10 +3,13 @@
   I. Подготовка
 - Загрузка этого проекта
 
-`sudo apt install git
-mkdir ./docker_root /n
-cd ./docker_root
-git clone --branch master --single-branch https://github.com/Firzen475/KMS.git`
+`sudo apt install git`
+
+`mkdir ./docker_root `
+
+`cd ./docker_root`
+
+`git clone --branch master --single-branch https://github.com/Firzen475/KMS.git`
 
 - Настройка файла переменных
  
@@ -56,15 +59,15 @@ git clone --branch master --single-branch https://github.com/Firzen475/KMS.git`
 
 - Полезные команды
 
-`docker image rm $(docker image  ls -aq) -f #Удалить все image
+`docker image rm $(docker image  ls -aq) -f #Удалить все image`
 
-docker container prune #Удалить все контейнеры
+`docker container prune #Удалить все контейнеры`
 
-docker-compose down && docker-compose build --force-rm && docker-compose up -d #Сборка и запуск контейнеров
+`docker-compose down && docker-compose build --force-rm && docker-compose up -d #Сборка и запуск контейнеров`
 
-docker image ls #Список образов
+`docker image ls #Список образов`
 
-docker container ls #Список контейнеров`
+`docker container ls #Список контейнеров`
 
   III. Проверка
 
