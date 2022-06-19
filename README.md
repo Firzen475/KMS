@@ -5,11 +5,9 @@
 
 `sudo apt install git`
 
-`mkdir ./docker_root `
-
-`cd ./docker_root`
-
 `git clone --branch master --single-branch https://github.com/Firzen475/KMS.git`
+
+`cd ./KMS`
 
 - Настройка файла переменных
  
