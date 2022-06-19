@@ -5,6 +5,7 @@ services:
       context: ./ansible_kms
       dockerfile: Dockerfile
       args:
+        TZ: "[TimeZone]" 
         SHEDULE: "* */2 * * *"
     image: ansible_kms
     container_name: ansible_kms
