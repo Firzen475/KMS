@@ -1,6 +1,7 @@
 FROM ubuntu:20.04 as ansible_kms
 
-ENV TZ=Asia/Yekaterinburg
+ARG TZ Europe/Moscow
+ENV TZ $TZ
 
 WORKDIR /root
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
