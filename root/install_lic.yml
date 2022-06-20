@@ -38,10 +38,9 @@
       ansible.windows.win_powershell:
         script: |
           cscript {{ slmgr_path.output[0] }} /ipk NRG8B-VKK3Q-CXVCJ-9G2XF-6Q84J |
-          cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /skms 10.10.30.5:1688 |
+          cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /skms {{ kms_srv }}:{{ kms_port }} |
           cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /ato
       ignore_errors: True
-      register: act_win10
       when:
         - os_version_obj.output[0] is defined
         - os_version_obj.output[0] == 10
@@ -52,10 +51,9 @@
       ansible.windows.win_powershell:
         script: |
           cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /ipk FJ82H-XT6CR-J8D7P-XQJJ2-GPDD4 |
-          cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /skms 10.10.30.5:1688 |
+          cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /skms {{ kms_srv }}:{{ kms_port }} |
           cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /ato
       ignore_errors: True
-      register: Activate_win_10_pro
       when:
         - os_version_obj.output[0] is defined
         - os_version_obj.output[0] == 7
@@ -185,7 +183,8 @@
           cscript "{{ ospp_exist.output[0] }}" /inpkey:YG9NW-3K39V-2T3HJ-93F3Q-G83KT |
           cscript "{{ ospp_exist.output[0] }}" /inpkey:PD3PC-RHNGV-FXJ29-8JK7D-RJRJK |
           cscript "{{ ospp_exist.output[0] }}" /inpkey:869NQ-FJ69K-466HW-QYCP2-DDBV6 |
-          cscript "{{ ospp_exist.output[0] }}" /sethst:10.10.30.5 |
+          cscript "{{ ospp_exist.output[0] }}" /sethst:{{ kms_srv }} |
+          cscript "{{ ospp_exist.output[0] }}" /setprt:{{ kms_port }} |
           cscript "{{ ospp_exist.output[0] }}" /act
       ignore_errors: True
       register: office_act_result
