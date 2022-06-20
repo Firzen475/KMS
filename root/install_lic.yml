@@ -37,7 +37,7 @@
     - name: Повторная активация для WIN 10 PRO
       ansible.windows.win_powershell:
         script: |
-          cscript {{ slmgr_path.output[0] }} /ipk NRG8B-VKK3Q-CXVCJ-9G2XF-6Q84J |
+          cscript {{ slmgr_path.output[0] }} /ipk {{ key_win10 }} |
           cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /skms {{ kms_srv }}:{{ kms_port }} |
           cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /ato
       ignore_errors: True
@@ -50,7 +50,7 @@
     - name: Повторная активация для WIN 7 PRO
       ansible.windows.win_powershell:
         script: |
-          cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /ipk FJ82H-XT6CR-J8D7P-XQJJ2-GPDD4 |
+          cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /ipk {{ key_win7 }} |
           cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /skms {{ kms_srv }}:{{ kms_port }} |
           cscript C:\WINDOWS\SYSTEM32\slmgr.vbs /ato
       ignore_errors: True
@@ -179,10 +179,10 @@
     - name: Установка ключей и активация
       ansible.windows.win_powershell:
         script: |
-          cscript "{{ ospp_exist.output[0] }}" /inpkey:XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99 |
-          cscript "{{ ospp_exist.output[0] }}" /inpkey:YG9NW-3K39V-2T3HJ-93F3Q-G83KT |
-          cscript "{{ ospp_exist.output[0] }}" /inpkey:PD3PC-RHNGV-FXJ29-8JK7D-RJRJK |
-          cscript "{{ ospp_exist.output[0] }}" /inpkey:869NQ-FJ69K-466HW-QYCP2-DDBV6 |
+          cscript "{{ ospp_exist.output[0] }}" /inpkey:{{ key_office }} |
+          cscript "{{ ospp_exist.output[0] }}" /inpkey:{{ key_proj }} |
+          cscript "{{ ospp_exist.output[0] }}" /inpkey:{{ key_visio }} |
+          cscript "{{ ospp_exist.output[0] }}" /inpkey:{{ key_skype }} |
           cscript "{{ ospp_exist.output[0] }}" /sethst:{{ kms_srv }} |
           cscript "{{ ospp_exist.output[0] }}" /setprt:{{ kms_port }} |
           cscript "{{ ospp_exist.output[0] }}" /act
