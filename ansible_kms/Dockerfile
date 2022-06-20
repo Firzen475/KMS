@@ -20,3 +20,6 @@ VOLUME [ "/var/log", "/root" ]
 
 #CMD [ "cat",  "/etc/krb5.conf", "&& tail -f /dev/null" ]
 CMD ["cron","-f"]
+
+
+
