@@ -10,6 +10,14 @@ ansible_port = 5985
 ansible_winrm_transport = kerberos
 ansible_winrm_server_cert_validation = ignore
 ansible_become = false
+kms_srv = xxx.xxx.xxx.xxx
+kms_port = 1688
+key_win10 = XXXXX-XXXXX-XXXXX-XXXXX-6Q84J
+key_win7 = XXXXX-XXXXX-XXXXX-XXXXX-GPDD4
+key_office = XXXXX-XXXXX-XXXXX-XXXXX-WFG99
+key_proj = XXXXX-XXXXX-XXXXX-XXXXX-G83KT
+key_visio = XXXXX-XXXXX-XXXXX-XXXXX-RJRJK
+key_skype = XXXXX-XXXXX-XXXXX-XXXXX-DDBV6
 
 
 
