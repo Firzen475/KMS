@@ -11,7 +11,7 @@ mv /etc/krb5.conf  /etc/krb5.conf.back
 
 COPY krb5.conf /etc/krb5.conf
 
-ARG SHEDULE  "* */2 * * *"
+ARG SHEDULE  "0 */1 * * *"
 ENV SHEDULE $SHEDULE
 RUN  echo "${SHEDULE} chmod +x /root/run.sh && /bin/bash /root/run.sh" >> /mycron | crontab -u root /mycron  
 RUN  crontab -l
