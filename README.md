@@ -65,6 +65,8 @@
 
 `docker image rm $(docker image  ls -aq) -f #Удалить все image`
 
+'docker run -t -i [container_name] /bin/bash'
+
 `docker container prune #Удалить все контейнеры`
 
 `docker-compose down && docker-compose build --force-rm && docker-compose up -d #Сборка и запуск контейнеров`
